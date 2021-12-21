@@ -15,7 +15,7 @@ let tempMovingItem;
 // block element four value
 const BLOCKS = {
     tree: [
-        [[0, 0],[0, 1],[1, 0],[1, 1]],
+        [[2, 1],[0, 1],[1, 0],[1, 1]],
         [],
         [],
         [],
@@ -48,7 +48,7 @@ function prependNewLine() {
     const ul = document.createElement("ul");
     for(let j = 0; j < GAME_COLS; j++) {
         const matrix = document.createElement("li");
-        ul.prepend(matrix);
+        ul.prepend(matrix)
     }
     li.prepend(ul)
     playground.prepend(li)
@@ -61,7 +61,7 @@ function renderBlocks() {
     BLOCKS[type][direction].forEach(block => {
         const x = block[0];
         const y = block[1];
-        console.log({playground})
+        //console.log({playground})
 
         // set target value for moving
         const target = playground.childNodes[y].childNodes[0].childNodes[x];

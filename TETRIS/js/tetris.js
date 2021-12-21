@@ -15,7 +15,7 @@ let tempMovingItem;
 // block element four value
 const BLOCKS = {
     tree: [
-        [[2, 1],[0, 1],[1, 0],[1, 1]],
+        [[2, 0],[0, 1],[1, 0],[1, 1]],
         [],
         [],
         [],

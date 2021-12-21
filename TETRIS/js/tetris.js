@@ -12,13 +12,13 @@ let downInterval;
 // temp location before moving
 let tempMovingItem;
 
-// block element four value
+// block four view after block moving 
 const BLOCKS = {
     tree: [
         [[2, 1],[0, 1],[1, 0],[1, 1]],
-        [],
-        [],
-        [],
+        [[1, 2],[0, 1],[1, 0],[1, 1]],
+        [[1, 2],[0, 1],[2, 1],[1, 1]],
+        [[2, 1],[1, 2],[1, 0],[1, 1]],
     ]
 };
 
@@ -53,7 +53,7 @@ function prependNewLine() {
     li.prepend(ul)
     playground.prepend(li)
 }
-function renderBlocks() {
+function renderBlocks(moveType = "") {
     // get type, direction, top, left
     const {type, direction, top, left} = tempMovingItem;
     const movingBlocks = document.querySelectorAll(".moving");    
@@ -74,11 +74,12 @@ function renderBlocks() {
             tempMovingItem = { ...movingItem };
             setTimeout(()=> {
                 renderBlocks(); 
-                if (moveType == "top") {
+                if (moveType === "top") {
                     seizeBlock();
                 }
                 //renderBlocks(); 
             },0)
+            return true;
         }
     })
     movingItem.left = left;
@@ -96,6 +97,11 @@ function checkEmpty(target) {
 }
 function moveBlock(moveType, amount) {
     tempMovingItem[moveType] += amount;
+    renderBlocks(moveType)
+}
+function changeDirection() {
+    const direction = tempMovingItem.direction;
+    direction === 3 ? tempMovingItem.direction = 0 : tempMovingItem.direction += 1;
     renderBlocks()
 }
 
@@ -107,6 +113,9 @@ document.addEventListener("keydown", e => {
             break;
         case 37:
             moveBlock("left", -1);
+            break;
+        case 38:
+            changeDirection();
             break;
         case 40:
             moveBlock("top", 1);

@@ -61,7 +61,7 @@ function renderBlocks(moveType = "") {
         //console.log(moving)
         moving.classList.remove(type, "moving");    
     })
-    BLOCKS[type][direction].forEach(block => {
+    BLOCKS[type][direction].some(block => {
         const x = block[0] + left;
         const y = block[1] + top;
 
@@ -72,13 +72,12 @@ function renderBlocks(moveType = "") {
             target.classList.add(type, "moving")
         } else {
             tempMovingItem = { ...movingItem };
-            setTimeout(()=> {
-                renderBlocks(); 
+            setTimeout(() => {
+                renderBlocks()
                 if (moveType === "top") {
                     seizeBlock();
                 }
-                //renderBlocks(); 
-            },0)
+            }, 0)
             return true;
         }
     })
@@ -86,11 +85,21 @@ function renderBlocks(moveType = "") {
     movingItem.top = top;
     movingItem.direction = direction;
 }
-function seizeBlock () {
-    console.log('seize block')
+function seizeBlock() {
+    const movingBlocks = document.querySelectorAll(".moving");
+    movingBlocks.forEach(moving => {
+        moving.classList.remove("moving");    
+        moving.classList.add("seized");    
+    })
+}
+function generateNewBlock() {
+    movingItem.top = 0;
+    movingItem.left = 3;
+    tempMovingItem = { ...movingItem }
+    renderBlocks();
 }
 function checkEmpty(target) {
-    if (!target){
+    if (!target || target.classList.contains("seized")) {
         return false;
     }
     return true;
